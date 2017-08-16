@@ -1,0 +1,73 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+  xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
+  xmlns:i="jelly:fmt" xmlns:p="/lib/hudson/project">
+  <f:entry title="${it.name}" description="${it.description}" >
+	<div name="parameter" description="${it.description}" >
+  	  
+	<input type="hidden" name="name" value="${it.name}"/>
+	<input type="hidden" name="SelectedVarsStr" value="${it.SelectedVarsStr}" id="SelectedVarsStr_id"/>
+        <f:entry title="Name" field="name" >
+                <f:textbox value="${it.name}" disabled="true"/>
+        </f:entry>
+
+
+        <f:entry title="Vars(String) String" field="VarsString" >
+                <f:textbox value="${it.VarsString}" disabled="true"/>
+        </f:entry>
+
+        <f:entry title="Vars(String) List">
+		<table width="100%" border="0" cellpadding="2" cellspacing="0" id="CL_Picker" >
+			<j:set var="idx" value="0"/>
+			<j:forEach var="res" items="${it.VarsList}">
+				<tr>
+				<td>
+					<j:set var="tmp" value="unchecked"/>
+					<j:forEach var="selected" items="${it.SelectedVarsList}">
+						<j:if test="${res == selected}" >
+							<j:set var="tmp" value="checked"/>
+						</j:if>
+					</j:forEach>
+					<j:choose>
+					<j:when test="${tmp eq 'checked'}">
+						<input type="checkbox" name="selectedRow" checked="true" value="${res}" id="row_${idx}" onClick="rowSelected('${it.VarsList}')"/>
+					</j:when>
+					<j:otherwise>
+						<input type="checkbox" name="selectedRow" value="${res}" id="row_${idx}" onClick="rowSelected('${it.VarsList}')"/>
+					</j:otherwise>
+					</j:choose>
+				</td>
+				<td>${res}</td>
+				</tr>
+				<j:set var="idx" value="${idx+1}"/>
+			</j:forEach>
+
+		</table>
+        </f:entry>
+
+	</div>
+     
+    
+
+ </f:entry>
+<st:bind var="a" value="${it}"/>
+<script>
+<![CDATA[
+
+function rowSelected(VarsList){
+	var selected_array = new Array();
+	for (var i = 0; i < VarsList.length; i++ ) {
+		var checkBoxEle = document.getElementById("row_"+i);
+		if (checkBoxEle != null && checkBoxEle.checked){
+                	selected_array.push(checkBoxEle.value);
+		}
+		//SetSelectedVars();
+        }
+	var SelectedVarsStr_idEle = document.getElementById("SelectedVarsStr_id");
+	SelectedVarsStr_idEle.value = selected_array.join(";");
+	a.setSelectedVars(selected_array.join(";"));
+}
+]]>
+</script>
+  
+</j:jelly>
