@@ -21,7 +21,7 @@
 <script>
 <![CDATA[
 
-function rowSelected(){
+function mulStringrowSelected(){
         var selected_array = new Array();
 
 	var String_PickerEle = document.getElementById("String_Picker");
@@ -52,11 +52,14 @@ function VarsStringChange() {
 	var VarsStringEle = document.getElementById("VarsString");
 	var String_PickerEle = document.getElementById("String_Picker");
 	var SelectedVarsStr_idEle = document.getElementById("SelectedVarsStr_id");
+	if (VarsStringEle == null || String_PickerEle==null || SelectedVarsStr_idEle == null ){return;}
 
 	var rowNum=String_PickerEle.rows.length;
-	for (i=rowNum-1;i>=0;i--) 
-	{
-		String_PickerEle.deleteRow(i);
+	if (rowNum > 0){
+		for (i=rowNum-1;i>=0;i--) 
+		{
+			String_PickerEle.deleteRow(i);
+		}
 	}
 	var varsList = VarsStringEle.value.replace(/^\s\s*/, '').replace(/\s\s*$/, '').split(";");
 	var varsLen = varsList.length;
@@ -83,7 +86,7 @@ function VarsStringChange() {
 			checkbox.setAttribute("checked", checked);
 			selected_array.push(tmp);
 		}
-		checkbox.setAttribute("onclick", "rowSelected()");
+		checkbox.setAttribute("onclick", "mulStringrowSelected()");
 		var text1=document.createTextNode(tmp);
 		td1.append(checkbox);
 		td2.append(text1);

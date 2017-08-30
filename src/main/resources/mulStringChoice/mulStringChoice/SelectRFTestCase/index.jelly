@@ -30,10 +30,10 @@
 					</j:forEach>
 					<j:choose>
 					<j:when test="${tmp eq 'checked'}">
-						<input type="checkbox" name="selectedRow" checked="true" value="${res}" id="row_${idx}" onClick="rowSelected('${it.VarsList}')"/>
+						<input type="checkbox" name="selectedRow" checked="true" value="${res}" id="row_${idx}" onClick="mulStringrowSelected('${it.VarsList}')"/>
 					</j:when>
 					<j:otherwise>
-						<input type="checkbox" name="selectedRow" value="${res}" id="row_${idx}" onClick="rowSelected('${it.VarsList}')"/>
+						<input type="checkbox" name="selectedRow" value="${res}" id="row_${idx}" onClick="mulStringrowSelected('${it.VarsList}')"/>
 					</j:otherwise>
 					</j:choose>
 				</td>
@@ -54,7 +54,7 @@
 <script>
 <![CDATA[
 
-function rowSelected(VarsList){
+function mulStringrowSelected(VarsList){
 	var selected_array = new Array();
 	for (var i = 0; i < VarsList.length; i++ ) {
 		var checkBoxEle = document.getElementById("row_"+i);
